@@ -1,0 +1,1 @@
+data = ig.getCasoveRozlozeni!
