@@ -16,4 +16,5 @@ ig.getCenaZaGol = ->
     for i in <[branek domaci zapasu cena]>
       row[i] = parseInt row[i], 10
     row.cenaZaGol = row.zapasu * row.cena / row.branek
+    row.domacichGolu = row.domaci / row.branek
     row
