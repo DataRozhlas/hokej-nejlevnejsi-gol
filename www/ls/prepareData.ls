@@ -10,3 +10,10 @@ ig.getCasoveRozlozeni = ->
         i < dostaliCount - daliCount
       {dali, dostali}
     out
+
+ig.getCenaZaGol = ->
+  d3.tsv.parse ig.data.cenaZaGol, (row) ->
+    for i in <[branek domaci zapasu cena]>
+      row[i] = parseInt row[i], 10
+    row.cenaZaGol = row.zapasu * row.cena / row.branek
+    row
