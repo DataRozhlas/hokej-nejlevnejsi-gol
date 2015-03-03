@@ -30,22 +30,17 @@ ig.drawCasoveRozlozeni = (parentElement) ->
             draw klub
         ..classed \active (d, i) -> 0 == i
   klubyItems = kluby.selectAll \li
-  container
-    ..append \div
-      ..attr \class \left
-        ..append \h3 .html "Góly, které dali protihráčům"
-    ..append \div
-      ..attr \class \right
-        ..append \h3 .html "Góly, které tým dostal"
+
   lines = container.append \div .attr \class \lines
   lineElements = lines.selectAll \div.line .data times .enter!append \div
     .attr \class \line
   leftsLines = lineElements.append \div .attr \class \left
   markerLines = lineElements.append \dvi .attr \class \marker .html (.title)
-  rightLines = lineElements.append \div .attr \class \right
 
   draw = (klub) ->
-    leftsLines.selectAll \div.active .data ((d, i) -> klub.times[i].dali)
+    lineElements.classed \positive (d, i) ->
+      klub.times[i].daliCount > klub.times[i].dostaliCount
+    leftsLines.selectAll \div.active .data ((d, i) -> klub.times[i].count)
       ..enter!append \div
         ..attr \class "entering active"
         ..transition!
@@ -58,18 +53,6 @@ ig.drawCasoveRozlozeni = (parentElement) ->
           ..delay 800
           ..remove!
       ..classed "full" -> it
-    rightLines.selectAll \div.active .data ((d, i) -> klub.times[i].dostali)
-      ..enter!append \div
-        ..attr \class "entering active"
-        ..transition!
-          ..delay 10
-          ..attr \class -> if it then "full active" else "active"
-      ..exit!
-        ..classed \exiting yes
-        ..classed \active no
-        ..transition!
-          ..delay 800
-          ..remove!
-      ..classed "full" -> it
+      ..style \bottom (d, i) -> "#{i * 10}px"
 
   draw data.0
