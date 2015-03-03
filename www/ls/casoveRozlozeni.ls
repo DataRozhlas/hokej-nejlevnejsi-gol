@@ -45,13 +45,31 @@ ig.drawCasoveRozlozeni = (parentElement) ->
   rightLines = lineElements.append \div .attr \class \right
 
   draw = (klub) ->
-    leftsLines.selectAll \div .data ((d, i) -> klub.times[i].dali)
+    leftsLines.selectAll \div.active .data ((d, i) -> klub.times[i].dali)
       ..enter!append \div
-      ..exit!remove!
+        ..attr \class "entering active"
+        ..transition!
+          ..delay 10
+          ..attr \class -> if it then "full active" else "active"
+      ..exit!
+        ..classed \exiting yes
+        ..classed \active no
+        ..transition!
+          ..delay 800
+          ..remove!
       ..classed "full" -> it
-    rightLines.selectAll \div .data ((d, i) -> klub.times[i].dostali)
+    rightLines.selectAll \div.active .data ((d, i) -> klub.times[i].dostali)
       ..enter!append \div
-      ..exit!remove!
+        ..attr \class "entering active"
+        ..transition!
+          ..delay 10
+          ..attr \class -> if it then "full active" else "active"
+      ..exit!
+        ..classed \exiting yes
+        ..classed \active no
+        ..transition!
+          ..delay 800
+          ..remove!
       ..classed "full" -> it
 
   draw data.0

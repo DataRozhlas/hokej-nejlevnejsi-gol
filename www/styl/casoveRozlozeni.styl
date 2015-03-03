@@ -55,6 +55,11 @@
         div
           width (100% / 40)
           height 29px
+          opacity 1
+          transition opacity 0.8s, background 0.8s, border 0.8s
+          &.entering
+          &.exiting
+            opacity 0
       .left div
         float right
         border-left 1px solid
