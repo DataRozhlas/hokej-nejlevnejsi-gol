@@ -3,7 +3,10 @@
     float left
     .line
       height 30px
-      position relative
+      position absolute
+      left 0px
+      width 100%
+      transition top 0.4s
       .bar
         height 23px
         position absolute
@@ -13,13 +16,17 @@
         border-top-left-radius 2px
         border-bottom-left-radius 2px
         background ColorRed
+        transition width 0.4s
       .title
         position absolute
         top 6px
         padding-right 8px
+        transition right 0.4s
       .value
         position absolute
         top 6px
         padding-left 8px
         color #FFF
         font-weight bold
+        transition left 0.4s
+
