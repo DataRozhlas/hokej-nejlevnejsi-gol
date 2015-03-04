@@ -31,6 +31,11 @@ ig.drawCasoveRozlozeni = (parentElement) ->
         ..classed \active (d, i) -> 0 == i
   klubyItems = kluby.selectAll \li
 
+  container.append \ul .attr \class \legend
+    ..append \li .html "Góly, které tým dal i dostal"
+    ..append \li .html "Góly, které tým dal navíc (v úseku se mu tedy dařilo)"
+    ..append \li .html "Góly, které tým dostal navíc (v úseku tedy prohrával)"
+
   lines = container.append \div .attr \class \lines
   lineElements = lines.selectAll \div.line .data times .enter!append \div
     .attr \class \line
