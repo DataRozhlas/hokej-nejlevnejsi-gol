@@ -53,7 +53,7 @@
     float right
   .left
   .right
-    width 47%
+    width 46%
   .lines
     width 100%
     float left
@@ -62,6 +62,7 @@
       float left
       .left
       .right
+        position relative
         height 30px
         div
           width (100% / 40)
@@ -74,22 +75,16 @@
       .left div
         float right
         border-left 1px solid
-        background lighten(desaturate(ColorBlue, 80%), 70%)
-        border-color lighten(desaturate(ColorBlue, 80%), 90%)
-        &.full
-          background ColorBlue
-          border-color lighten(desaturate(ColorBlue, 80%), 50%)
+        background ColorBlue
+        border-color lighten(desaturate(ColorBlue, 80%), 50%)
       .right div
         float left
         border-left 1px solid
-        background lighten(desaturate(ColorRed, 80%), 70%)
-        border-color lighten(desaturate(ColorRed, 80%), 90%)
-        &.full
-          background ColorRed
-          border-color lighten(desaturate(ColorRed, 80%), 50%)
+        background ColorRed
+        border-color lighten(desaturate(ColorRed, 80%), 50%)
       .marker
         float left
-        width 6%
+        width 8%
         text-align center
         font-size 11px
         text-transform uppercase
@@ -100,6 +95,14 @@
           display none
           position relative
           top -2px
+      .counts
+        position absolute
+        top 7px
+        font-size 11px
+      .left .counts
+        padding-right 10px
+      .right .counts
+        padding-left 10px
       &:nth-child(13) .marker
         top -15px
         line-height 21px

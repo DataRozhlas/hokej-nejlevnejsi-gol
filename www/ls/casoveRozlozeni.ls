@@ -30,8 +30,6 @@ ig.drawCasoveRozlozeni = (parentElement) ->
             draw klub
         ..classed \active (d, i) -> 0 == i
   klubyItems = kluby.selectAll \li
-  container.append \p .html "Sytá barva značí převahu &ndash; <span>více skórovali</span> nebo <span>více dostávali</span>."
-    .attr \class \legend
   container
     ..append \div
       ..attr \class \left
@@ -45,6 +43,10 @@ ig.drawCasoveRozlozeni = (parentElement) ->
   leftsLines = lineElements.append \div .attr \class \left
   markerLines = lineElements.append \dvi .attr \class \marker .html (.title)
   rightLines = lineElements.append \div .attr \class \right
+  countsLeft = leftsLines.append \span
+    ..attr \class "counts counts-left"
+  countsRight = rightLines.append \span
+    ..attr \class "counts counts-right"
 
   draw = (klub) ->
     leftsLines.selectAll \div.active .data ((d, i) -> klub.times[i].dali)
@@ -73,5 +75,12 @@ ig.drawCasoveRozlozeni = (parentElement) ->
           ..delay 800
           ..remove!
       ..classed "full" -> it
+
+    countsLeft
+      ..html (d, i) -> klub.times[i].dali.length
+      ..style \right (d, i) -> "#{klub.times[i].dali.length * 100 / 40}%"
+    countsRight
+      ..html (d, i) -> klub.times[i].dostali.length
+      ..style \left (d, i) -> "#{klub.times[i].dostali.length * 100 / 40}%"
 
   draw data.0
