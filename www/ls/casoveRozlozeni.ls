@@ -1,17 +1,17 @@
 times =
-  * id: 300, title: "00&ndash;05<br><span>minut</span>"
-  * id: 600, title: "05&ndash;10<br><span>minut</span>"
-  * id: 900, title: "10&ndash;15<br><span>minut</span>"
-  * id: 1200, title: "15&ndash;20<br><span>minut</span>"
-  * id: 1500, title: "20&ndash;25<br><span>minut</span>"
-  * id: 1800, title: "25&ndash;30<br><span>minut</span>"
-  * id: 2100, title: "30&ndash;35<br><span>minut</span>"
-  * id: 2400, title: "35&ndash;40<br><span>minut</span>"
-  * id: 2700, title: "40&ndash;45<br><span>minut</span>"
-  * id: 3000, title: "45&ndash;50<br><span>minut</span>"
-  * id: 3300, title: "50&ndash;55<br><span>minut</span>"
-  * id: 3600, title: "55&ndash;60<br><span>minut</span>"
-  * id: 3889, title: "prod."
+  * id: 300, title: "00:00"
+  * id: 600, title: "05:00"
+  * id: 900, title: "10:00"
+  * id: 1200, title: "15:00"
+  * id: 1500, title: "20:00"
+  * id: 1800, title: "25:00"
+  * id: 2100, title: "30:00"
+  * id: 2400, title: "35:00"
+  * id: 2700, title: "40:00"
+  * id: 3000, title: "45:00"
+  * id: 3300, title: "50:00"
+  * id: 3600, title: "55:00"
+  * id: 3889, title: "60:00<br>prod."
   * id: 3900, title: "náj."
 ig.drawCasoveRozlozeni = (parentElement) ->
   data = ig.getCasoveRozlozeni!
@@ -30,22 +30,24 @@ ig.drawCasoveRozlozeni = (parentElement) ->
             draw klub
         ..classed \active (d, i) -> 0 == i
   klubyItems = kluby.selectAll \li
-
-  container.append \ul .attr \class \legend
-    ..append \li .html "Góly, které tým dal i dostal"
-    ..append \li .html "Góly, které tým dal navíc (v úseku se mu tedy dařilo)"
-    ..append \li .html "Góly, které tým dostal navíc (v úseku tedy prohrával)"
-
+  container.append \p .html "Sytá barva značí převahu &ndash; <span>více skórovali</span> nebo <span>více dostávali</span>."
+    .attr \class \legend
+  container
+    ..append \div
+      ..attr \class \left
+        ..append \h3 .html "Góly, které dali protihráčům"
+    ..append \div
+      ..attr \class \right
+        ..append \h3 .html "Góly, které tým dostal"
   lines = container.append \div .attr \class \lines
   lineElements = lines.selectAll \div.line .data times .enter!append \div
     .attr \class \line
   leftsLines = lineElements.append \div .attr \class \left
   markerLines = lineElements.append \dvi .attr \class \marker .html (.title)
+  rightLines = lineElements.append \div .attr \class \right
 
   draw = (klub) ->
-    lineElements.classed \positive (d, i) ->
-      klub.times[i].daliCount > klub.times[i].dostaliCount
-    leftsLines.selectAll \div.active .data ((d, i) -> klub.times[i].count)
+    leftsLines.selectAll \div.active .data ((d, i) -> klub.times[i].dali)
       ..enter!append \div
         ..attr \class "entering active"
         ..transition!
@@ -58,6 +60,18 @@ ig.drawCasoveRozlozeni = (parentElement) ->
           ..delay 800
           ..remove!
       ..classed "full" -> it
-      ..style \bottom (d, i) -> "#{i * 10}px"
+    rightLines.selectAll \div.active .data ((d, i) -> klub.times[i].dostali)
+      ..enter!append \div
+        ..attr \class "entering active"
+        ..transition!
+          ..delay 10
+          ..attr \class -> if it then "full active" else "active"
+      ..exit!
+        ..classed \exiting yes
+        ..classed \active no
+        ..transition!
+          ..delay 800
+          ..remove!
+      ..classed "full" -> it
 
   draw data.0
