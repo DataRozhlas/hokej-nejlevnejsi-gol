@@ -7,7 +7,7 @@ ig.getCasoveRozlozeni = ->
       maxCount = Math.max daliCount, dostaliCount
       diff = Math.abs daliCount - dostaliCount
       count = for i in [0 to maxCount]
-        i < diff
+        (maxCount - i) < diff
       {count, daliCount, dostaliCount}
     out
 
