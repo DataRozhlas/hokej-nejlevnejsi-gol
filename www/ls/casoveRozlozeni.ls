@@ -24,11 +24,11 @@ ig.drawCasoveRozlozeni = (parentElement) ->
         ..append \a
           ..attr \href \#
           ..html -> it.klub
-          ..on \click (klub) ->
+          ..on \click (klub, i) ->
             d3.event.preventDefault!
             klubyItems.classed \active -> it is klub
+            window.location.hash = '#klub-' + i
             draw klub
-        ..classed \active (d, i) -> 0 == i
   klubyItems = kluby.selectAll \li
   container
     ..append \div
@@ -82,5 +82,10 @@ ig.drawCasoveRozlozeni = (parentElement) ->
     countsRight
       ..html (d, i) -> klub.times[i].dostali.length
       ..style \left (d, i) -> "#{klub.times[i].dostali.length * 100 / 40}%"
-
-  draw data.0
+  toDrawId = parseInt do
+    window.location.hash.substr 6
+    10
+  toDraw = data[toDrawId || 0] || data[0]
+  draw toDraw
+  klubyItems
+    ..classed \active (d, i) -> d == toDraw
